@@ -26,18 +26,18 @@ namespace Entidades
 
         #region Constructores
         public ELibro() {
-            claveLibro = string.Empty;
-            titulo = string.Empty;
-            claveAutor = string.Empty;
-            claveCategoria = new ECategoria();
-            existe = false;
+            ClaveLibro = string.Empty;
+            Titulo = string.Empty;
+            ClaveAutor = string.Empty;
+            Clavecategoria = new ECategoria();
+            Existe = false;
         }
         public ELibro(string claLibro, string tit, string claAutor, ECategoria cate, bool ext) {
-            claveLibro = claLibro;
-            titulo = tit;
-            claveAutor = claAutor;
-            claveCategoria = cate;
-            existe = ext;
+            ClaveLibro = claLibro;
+            Titulo = tit;
+            ClaveAutor = claAutor;
+            Clavecategoria = cate;
+            Existe = ext;
         }
         #endregion
     }

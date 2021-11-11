@@ -42,8 +42,8 @@ namespace EjemploCRUDLibros
             this.btnEliminar = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnNuevo = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.dgvLibros = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLibros)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -61,6 +61,7 @@ namespace EjemploCRUDLibros
             this.txtClaveLibro.Name = "txtClaveLibro";
             this.txtClaveLibro.Size = new System.Drawing.Size(108, 26);
             this.txtClaveLibro.TabIndex = 1;
+            this.txtClaveLibro.Text = "LB001";
             // 
             // txtTitulo
             // 
@@ -68,6 +69,7 @@ namespace EjemploCRUDLibros
             this.txtTitulo.Name = "txtTitulo";
             this.txtTitulo.Size = new System.Drawing.Size(362, 26);
             this.txtTitulo.TabIndex = 3;
+            this.txtTitulo.Text = "Otro Libro";
             // 
             // label2
             // 
@@ -84,6 +86,7 @@ namespace EjemploCRUDLibros
             this.txtClaveAutor.Name = "txtClaveAutor";
             this.txtClaveAutor.Size = new System.Drawing.Size(108, 26);
             this.txtClaveAutor.TabIndex = 5;
+            this.txtClaveAutor.Text = "A0023";
             // 
             // label3
             // 
@@ -100,6 +103,7 @@ namespace EjemploCRUDLibros
             this.txtCategoria.Name = "txtCategoria";
             this.txtCategoria.Size = new System.Drawing.Size(139, 26);
             this.txtCategoria.TabIndex = 7;
+            this.txtCategoria.Text = "C0001";
             // 
             // label4
             // 
@@ -172,23 +176,23 @@ namespace EjemploCRUDLibros
             this.btnNuevo.UseVisualStyleBackColor = true;
             this.btnNuevo.Click += new System.EventHandler(this.btnNuevo_Click);
             // 
-            // dataGridView1
+            // dgvLibros
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(26, 144);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(771, 286);
-            this.dataGridView1.TabIndex = 13;
+            this.dgvLibros.AllowUserToAddRows = false;
+            this.dgvLibros.AllowUserToDeleteRows = false;
+            this.dgvLibros.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvLibros.Location = new System.Drawing.Point(26, 144);
+            this.dgvLibros.Name = "dgvLibros";
+            this.dgvLibros.ReadOnly = true;
+            this.dgvLibros.Size = new System.Drawing.Size(771, 286);
+            this.dgvLibros.TabIndex = 13;
             // 
             // frmLibros
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(825, 459);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvLibros);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.btnEliminar);
@@ -206,7 +210,8 @@ namespace EjemploCRUDLibros
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "frmLibros";
             this.Text = "Administración de Libros";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.Load += new System.EventHandler(this.frmLibros_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLibros)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -227,7 +232,7 @@ namespace EjemploCRUDLibros
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.Button btnSalir;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvLibros;
     }
 }
 

@@ -15,12 +15,12 @@ namespace Entidades
 
         //Constructores
         public ECategoria() {
-            claveCategoria = string.Empty;
-            descripcion = string.Empty;
+            ClaveCategoria = string.Empty;
+            Descripcion = string.Empty;
         }
         public ECategoria(string clave, string desc) {
-            claveCategoria = clave;
-            descripcion = desc;
+            ClaveCategoria = clave;
+            Descripcion = desc;
         }
     }
 }
