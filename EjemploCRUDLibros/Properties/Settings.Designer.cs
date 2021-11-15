@@ -31,5 +31,14 @@ namespace EjemploCRUDLibros.Properties {
                 return ((string)(this["CadConexion"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=DESKTOP-9TSOK8M\\SQLEXPRESS;Database=Biblioteca;Trusted_Connection=True;")]
+        public string segundaCDA {
+            get {
+                return ((string)(this["segundaCDA"]));
+            }
+        }
     }
 }

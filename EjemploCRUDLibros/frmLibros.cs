@@ -16,6 +16,9 @@ namespace EjemploCRUDLibros
     {
 
         ECategoria categoria = new ECategoria("C0001", "Comic");
+        LNLibro ln = new LNLibro(Config.getCadConexion);
+        ELibro libro;
+
 
         public frmLibros()
         {
@@ -26,9 +29,16 @@ namespace EjemploCRUDLibros
         {
             txtClaveLibro.Text = string.Empty;
             txtTitulo.Text = string.Empty;
-            txtClaveAutor.Text = "A0023";
-            txtCategoria.Text = categoria.ClaveCategoria;
+            txtClaveAutor.Clear();
+            txtCategoria.Clear();
             txtClaveLibro.Focus();
+
+            libro = null;
+
+            btnEliminar.Enabled = false;
+
+            llenarDGV();
+
         }
         //******************************************
 
@@ -53,7 +63,7 @@ namespace EjemploCRUDLibros
             dgvLibros.Columns[2].HeaderText = "Clave Autor";
             dgvLibros.Columns[3].HeaderText = "Clave Categoría";
 
-            dgvLibros.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.DisplayedCells);
+            //dgvLibros.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.Fill);
         }
 
         //**************************************
@@ -103,48 +113,123 @@ namespace EjemploCRUDLibros
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            ELibro libro;
-            LNLibro ln = new LNLibro(Config.getCadConexion);
+            libro.Titulo = txtTitulo.Text;
+            ln.modificar(libro, "");
+            
+            //if (textosLlenos()) {
 
-            if (textosLlenos()) {
-                libro = new ELibro(txtClaveLibro.Text,
-                    txtTitulo.Text, txtClaveAutor.Text,
-                   categoria, false);
+            //    if(libro == null)
+            //        libro = new ELibro(txtClaveLibro.Text,
+            //            txtTitulo.Text, txtClaveAutor.Text,
+            //           categoria, false);
+            //    else 
 
-                try
+            //    if(!libro.Existe)
+            //        insertarLibro();
+            //}
+        }
+
+        private void insertarLibro()
+        {
+            try
+            {
+                if (!ln.libroRepetido(libro))
                 {
-                    if (!ln.libroRepetido(libro))
+                    if (!ln.claveLibroRepetida(libro.ClaveLibro))
                     {
-                        if (!ln.claveLibroRepetida(libro.ClaveLibro))
+                        if (ln.insertar(libro) > 0)
                         {
-                            if (ln.insertar(libro)>0) {
-                                MessageBox.Show("Guardado con éxito!");
-                                //TODO:fdsjdfjks
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("Esa Clave de Libro ya está" +
-                                " asignada a otro libro");
-                            txtClaveLibro.Focus();
+                            MessageBox.Show("Guardado con éxito!");
+                            limpiaTextos();
                         }
                     }
-                    else {
-                        MessageBox.Show("Ese título ya existe para el " +
-                            "autor indicado");
-                        txtTitulo.Focus();
+                    else
+                    {
+                        MessageBox.Show("Esa Clave de Libro ya está" +
+                            " asignada a otro libro");
+                        txtClaveLibro.Focus();
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    mensajeError(ex);                    
+                    MessageBox.Show("Ese título ya existe para el " +
+                        "autor indicado");
+                    txtTitulo.Focus();
                 }
+            }
+            catch (Exception ex)
+            {
+                mensajeError(ex);
             }
         }
 
         private void frmLibros_Load(object sender, EventArgs e)
         {
             llenarDGV();
+        }
+
+        private void dgvLibros_DoubleClick(object sender, EventArgs e)
+        {
+            int fila = dgvLibros.CurrentRow.Index;            
+            string clave = dgvLibros[0, fila].Value.ToString();
+            string condicion = $"claveLibro='{clave}'";
+
+            try
+            {
+                libro = ln.buscarRegistro(condicion);
+
+                if (libro != null) {
+                    libro.Existe = true;
+
+                    txtClaveLibro.Text = libro.ClaveLibro;
+                    txtTitulo.Text = libro.Titulo;
+                    txtClaveAutor.Text = libro.ClaveAutor;
+                    txtCategoria.Text = libro.Clavecategoria.ClaveCategoria;
+
+                    btnEliminar.Enabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                mensajeError(ex);
+            }
+        }
+
+        private void dgvLibros_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            DialogResult resp;
+            int resultado;
+            string msj;
+
+            if (libro != null && libro.Existe) {
+                resp = MessageBox.Show($"Confirma que desea Eliminar el libro {libro.Titulo} " +
+                    $"con código {libro.ClaveLibro}?","Confirmación",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (resp == DialogResult.Yes)
+                {
+                    msj = ln.eliminarProcedure(libro);
+                    MessageBox.Show(msj);
+                    limpiaTextos();
+
+                    //resultado = ln.eliminar(libro);
+                    //if (resultado > 0)
+                    //{
+                    //    MessageBox.Show("Libro Eliminado", "Eeeeexito!");
+                    //    limpiaTextos();
+                    //}
+                    //else if (ln.eliminar(libro) == -1)
+                    //    MessageBox.Show("Se presentó une error", "ERROR");
+                }
+                else
+                    limpiaTextos();
+            }
         }
     }
 }

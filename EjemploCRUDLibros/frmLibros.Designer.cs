@@ -140,6 +140,7 @@ namespace EjemploCRUDLibros
             // 
             // btnEliminar
             // 
+            this.btnEliminar.Enabled = false;
             this.btnEliminar.Image = global::EjemploCRUDLibros.Properties.Resources.Delete;
             this.btnEliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnEliminar.Location = new System.Drawing.Point(406, 85);
@@ -149,6 +150,7 @@ namespace EjemploCRUDLibros
             this.btnEliminar.Text = "&Eliminar";
             this.btnEliminar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnEliminar.UseVisualStyleBackColor = true;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // btnGuardar
             // 
@@ -180,12 +182,15 @@ namespace EjemploCRUDLibros
             // 
             this.dgvLibros.AllowUserToAddRows = false;
             this.dgvLibros.AllowUserToDeleteRows = false;
+            this.dgvLibros.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvLibros.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvLibros.Location = new System.Drawing.Point(26, 144);
             this.dgvLibros.Name = "dgvLibros";
             this.dgvLibros.ReadOnly = true;
             this.dgvLibros.Size = new System.Drawing.Size(771, 286);
             this.dgvLibros.TabIndex = 13;
+            this.dgvLibros.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLibros_CellContentClick);
+            this.dgvLibros.DoubleClick += new System.EventHandler(this.dgvLibros_DoubleClick);
             // 
             // frmLibros
             // 
