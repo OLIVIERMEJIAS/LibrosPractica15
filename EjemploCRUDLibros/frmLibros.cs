@@ -113,20 +113,99 @@ namespace EjemploCRUDLibros
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            libro.Titulo = txtTitulo.Text;
-            ln.modificar(libro, "");
-            
-            //if (textosLlenos()) {
+            string clave = "", titulo = "", autor = "";
 
-            //    if(libro == null)
-            //        libro = new ELibro(txtClaveLibro.Text,
-            //            txtTitulo.Text, txtClaveAutor.Text,
-            //           categoria, false);
-            //    else 
+            if (textosLlenos())
+            {
+                //Este IF termina con un LIBRO lleno!
+                if (libro == null)
+                    libro = new ELibro(txtClaveLibro.Text,
+                        txtTitulo.Text, txtClaveAutor.Text,
+                       categoria, false);
+                else
+                    if (hayCambios(ref clave, ref titulo, ref autor)) {
+                    {
+                        libro.ClaveLibro = txtClaveLibro.Text;
+                        libro.Titulo = txtTitulo.Text;
+                        libro.ClaveAutor = txtClaveAutor.Text;
+                        libro.Clavecategoria.ClaveCategoria = txtCategoria.Text;
+                    }
+                }
 
-            //    if(!libro.Existe)
-            //        insertarLibro();
-            //}
+                if (!libro.Existe) //Insert
+                    insertarLibro();
+                else
+                { //Update
+                    if (string.IsNullOrEmpty(clave) == false)
+                    {
+                        if (ln.claveLibroRepetida(libro.ClaveLibro) == false)
+                        {
+                            cambiosTituloAutor(clave, autor, titulo);
+                        }
+                        else
+                        {
+                            MessageBox.Show("La nueva clave de libro ya está en uso");
+                            txtClaveLibro.Focus();
+                        }
+                    }
+                    else {
+                        cambiosTituloAutor("", autor, titulo);
+                    }
+
+                }
+            }
+        }
+
+        private void cambiosTituloAutor(string clave, string autor, string titulo)
+        {
+            if (!string.IsNullOrEmpty(titulo) || !string.IsNullOrEmpty(autor))
+            {
+                if (ln.libroRepetido(libro) == false)
+                {
+                    hacerModificacion(clave);
+                }
+                else
+                {
+                    MessageBox.Show("No se puede actualizar porque el título y autor ya existen");
+                    limpiaTextos();
+                }
+            }
+            else
+            {
+                hacerModificacion(clave);
+            }
+        }
+
+        private void hacerModificacion(string clave)
+        {
+            if (ln.modificar(libro, clave) > 0)
+                MessageBox.Show("Actualización realizada");
+            else
+                MessageBox.Show("No se pudo modificar");
+
+            limpiaTextos();
+        }
+
+        private bool hayCambios(ref string clave, ref string titulo, ref string autor)
+        {
+            bool result = false;
+
+            if (txtClaveLibro.Text != libro.ClaveLibro) {
+                result = true;
+                clave = libro.ClaveLibro;//Clave Vieja
+            }
+
+            if (txtTitulo.Text != libro.Titulo) {
+                result = true;
+                titulo = libro.Titulo; //Título viejo
+            }
+
+            if (txtClaveAutor.Text != libro.ClaveAutor) {
+                result = true;
+                autor = libro.ClaveAutor;
+            }
+
+            return result;
         }
 
         private void insertarLibro()

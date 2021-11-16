@@ -61,7 +61,6 @@ namespace EjemploCRUDLibros
             this.txtClaveLibro.Name = "txtClaveLibro";
             this.txtClaveLibro.Size = new System.Drawing.Size(108, 26);
             this.txtClaveLibro.TabIndex = 1;
-            this.txtClaveLibro.Text = "LB001";
             // 
             // txtTitulo
             // 
@@ -69,7 +68,6 @@ namespace EjemploCRUDLibros
             this.txtTitulo.Name = "txtTitulo";
             this.txtTitulo.Size = new System.Drawing.Size(362, 26);
             this.txtTitulo.TabIndex = 3;
-            this.txtTitulo.Text = "Otro Libro";
             // 
             // label2
             // 
@@ -86,7 +84,6 @@ namespace EjemploCRUDLibros
             this.txtClaveAutor.Name = "txtClaveAutor";
             this.txtClaveAutor.Size = new System.Drawing.Size(108, 26);
             this.txtClaveAutor.TabIndex = 5;
-            this.txtClaveAutor.Text = "A0023";
             // 
             // label3
             // 
@@ -103,7 +100,6 @@ namespace EjemploCRUDLibros
             this.txtCategoria.Name = "txtCategoria";
             this.txtCategoria.Size = new System.Drawing.Size(139, 26);
             this.txtCategoria.TabIndex = 7;
-            this.txtCategoria.Text = "C0001";
             // 
             // label4
             // 

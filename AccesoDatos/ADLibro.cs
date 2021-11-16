@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
+using System.Linq;
 
 namespace AccesoDatos
 {
@@ -141,6 +142,45 @@ namespace AccesoDatos
             }
 
             return result;
+        }
+
+        public List<ELibro> listLibros(string condicion) {
+            List<ELibro> listarLibros = new List<ELibro>();
+            DataTable tabla = new DataTable();
+            string sentencia;
+
+            SqlDataAdapter adaptador;
+
+            sentencia = "Select claveLibro,titulo, claveAutor, claveCategoria From Libro";
+            if (!string.IsNullOrEmpty(condicion))
+                sentencia = string.Format("{0} where {1}", sentencia, condicion);
+
+            //sentencia = $"{sentencia} where {condicion}";
+            try
+            {
+                adaptador = new SqlDataAdapter(sentencia, cadConexion);
+                adaptador.Fill(tabla);
+
+                //LinQ
+                listarLibros = (from DataRow registro in tabla.Rows
+                                select new ELibro()
+                                {
+                                    ClaveLibro = registro[0].ToString(),
+                                    Titulo = registro[1].ToString(),
+                                    ClaveAutor = registro[2].ToString(),
+                                    Clavecategoria = new ECategoria() { 
+                                        ClaveCategoria = registro[3].ToString()
+                                    }
+                                }).ToList();
+
+            }
+            catch (Exception)
+            {
+
+                throw new Exception();
+            }
+            
+            return listarLibros;
         }
 
         public DataSet listarTodos(string condicion="") {

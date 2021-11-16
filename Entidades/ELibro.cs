@@ -7,17 +7,21 @@ namespace Entidades
     public class ELibro
     {
         #region Atributos
-        string claveLibro;
-        string titulo;
-        string claveAutor;
-        ECategoria claveCategoria;
-        bool existe;
+        private string claveLibro;
+        private string titulo;
+        private string claveAutor;
+        private ECategoria claveCategoria;
+        private bool existe;
 
         #endregion
 
         #region Propiedades
-        public string ClaveLibro { get; set; }
-        public string Titulo { get; set; }
+        //
+        public string ClaveLibro { get => claveLibro; set => claveLibro = value; }
+        public string Titulo { 
+            get { return titulo; }
+            set { titulo = value; } 
+        }
         public string ClaveAutor { get; set; }
         public ECategoria Clavecategoria { get; set; }
         public bool Existe { get; set; }
