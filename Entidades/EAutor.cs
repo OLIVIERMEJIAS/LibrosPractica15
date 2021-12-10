@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Entidades
 {
-    class EAutor
+    public class EAutor
     {
         public string ClaveAutor { get; set; }
         public string Nombre { get; set; }

@@ -44,7 +44,6 @@ namespace AccesoDatos
             comandoSQL.CommandText = sentencia;
 
             //3 Abrir Conexión / Ejecutar Comando / Recupar Datos 
-
             try
             {
                 conexionSQL.Open();

@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Entidades;
 using System.Data;
 using System.Data.SqlClient;
-using Entidades;
 
 namespace AccesoDatos
 {
-    public class ADAutor
+    public class ADCategoria
     {
-
-        public ADAutor(string cadConec)
+        public ADCategoria(string cadConec)
         {
             cadConexion = cadConec;
         }
-        public ADAutor()
+        public ADCategoria()
         {
             cadConexion = string.Empty;
         }
@@ -22,9 +21,9 @@ namespace AccesoDatos
         private string cadConexion;
 
         //*******************************************************************
-        public EAutor BuscarRegistro(string condicion)
+        public ECategoria BuscarRegistro(string condicion)
         {
-            EAutor aut = new EAutor();
+            ECategoria cate = new ECategoria();
             string sentencia;
 
             SqlCommand comandoSQL = new SqlCommand();
@@ -32,7 +31,7 @@ namespace AccesoDatos
             //Se requiere un objeto para recuperar los datos. 
             SqlDataReader dato;//Solo se define el objeto, no hace falta instanciarlo en este momento
 
-            sentencia = "Select claveAutor,nombre,apPaterno,apMaterno From Autor";
+            sentencia = "Select claveCategoria, descripcion From Categoria";
             if (!string.IsNullOrEmpty(condicion))
                 sentencia = string.Format("{0} Where {1}", sentencia, condicion);
 
@@ -46,11 +45,9 @@ namespace AccesoDatos
                 if (dato.HasRows)
                 {
                     dato.Read();
-                    aut.ClaveAutor = dato.GetString(0);
-                    aut.Nombre = !dato.IsDBNull(1) ? dato.GetString(1) : "";
-                    aut.ApPaterno = !dato.IsDBNull(2) ? dato.GetString(2) : ""; 
-                    aut.ApMaterno = !dato.IsDBNull(3) ? dato.GetString(3) : "";
-                    aut.ExiteRegistro = true;//Este dato es de App y solo le sirve al programador;
+                    cate.ClaveCategoria = dato.GetString(0);
+                    cate.Descripcion = !dato.IsDBNull(1) ? dato.GetString(1) : "";
+                    //cate.ExisteRegistro = true;//Este dato es de App y solo le sirve al programador;
                 }
                 conexionSQL.Close();
             }
@@ -58,7 +55,7 @@ namespace AccesoDatos
             {
                 throw new Exception("Error al recuperar el registro!");
             }
-            return aut;
+            return cate;
         }//Fin BUSCAR REGISTRO
         //*******************************************************************
 
@@ -68,7 +65,7 @@ namespace AccesoDatos
             SqlDataAdapter adaptador;
             SqlConnection conexion = new SqlConnection(cadConexion);
 
-            string sentencia = "Select * From Autor";
+            string sentencia = "Select * From Categoria";
 
             if (!string.IsNullOrEmpty(condicion))
                 sentencia = $"{sentencia} Where {condicion}";
@@ -80,7 +77,7 @@ namespace AccesoDatos
             }
             catch (Exception)
             {
-                throw new Exception("Se ha presentado un error extrayendo la lista de Autores");
+                throw new Exception("Se ha presentado un error extrayendo la lista de Tablas");
             }
 
             return result;
