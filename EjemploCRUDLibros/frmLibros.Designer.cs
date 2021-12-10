@@ -29,6 +29,7 @@ namespace EjemploCRUDLibros
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.txtClaveLibro = new System.Windows.Forms.TextBox();
             this.txtTitulo = new System.Windows.Forms.TextBox();
@@ -43,6 +44,7 @@ namespace EjemploCRUDLibros
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnNuevo = new System.Windows.Forms.Button();
             this.dgvLibros = new System.Windows.Forms.DataGridView();
+            this.ttt1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLibros)).BeginInit();
             this.SuspendLayout();
             // 
@@ -120,6 +122,7 @@ namespace EjemploCRUDLibros
             this.btnSalir.TabIndex = 12;
             this.btnSalir.Text = "&Salir";
             this.btnSalir.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ttt1.SetToolTip(this.btnSalir, "Cerrar el Formulario");
             this.btnSalir.UseVisualStyleBackColor = true;
             // 
             // btnBuscar
@@ -171,6 +174,7 @@ namespace EjemploCRUDLibros
             this.btnNuevo.TabIndex = 8;
             this.btnNuevo.Text = "&Nuevo";
             this.btnNuevo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ttt1.SetToolTip(this.btnNuevo, "Agregar nuevos Elementos");
             this.btnNuevo.UseVisualStyleBackColor = true;
             this.btnNuevo.Click += new System.EventHandler(this.btnNuevo_Click);
             // 
@@ -234,6 +238,7 @@ namespace EjemploCRUDLibros
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.Button btnSalir;
         private System.Windows.Forms.DataGridView dgvLibros;
+        private System.Windows.Forms.ToolTip ttt1;
     }
 }
 
