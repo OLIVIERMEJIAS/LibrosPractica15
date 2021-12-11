@@ -72,6 +72,21 @@ namespace LogicaNegocio
             return result;
         }
 
+        public DataTable listarTodos(string condicion, bool desdeVista)
+        {
+            DataTable dt;
+            ADLibro adL = new ADLibro(cadConexion);
+            try
+            {
+                dt = adL.listarTodos(condicion, desdeVista);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return dt;
+        }
         public DataSet listarTodos(string condicion = "") {
             DataSet setLibros;
             ADLibro adLibro = new ADLibro(cadConexion);

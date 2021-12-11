@@ -181,7 +181,32 @@ namespace AccesoDatos
             
             return listarLibros;
         }
+        public DataTable listarTodos(string condicion,bool desdeVista)
+        {
+            DataTable dt = new DataTable();
+            SqlDataAdapter ad;
+            SqlConnection conexion = new SqlConnection(cadConexion);
+            string sentencia = "Select * from vLibros";
+            if (!string.IsNullOrEmpty(condicion))
+            {
+                sentencia = $"{sentencia} Where {condicion}";
+            }
+            try
+            {
+                ad = new SqlDataAdapter(sentencia, conexion);
+                ad.Fill(dt);
+            }
+            catch (Exception)
+            {
 
+                throw new Exception("Se ha presentado algún error");
+            }
+            finally
+            {
+                conexion.Dispose();
+            }
+            return dt;
+        }
         public DataSet listarTodos(string condicion="") {
             DataSet setLibros = new DataSet();
             string sentencia = "Select claveLibro, titulo, claveAutor, claveCategoria from Libro";
