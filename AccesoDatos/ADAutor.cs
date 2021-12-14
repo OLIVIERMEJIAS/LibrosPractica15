@@ -71,7 +71,7 @@ namespace AccesoDatos
             string sentencia = "Select * From Autor";
 
             if (!string.IsNullOrEmpty(condicion))
-                sentencia = $"{sentencia} Where {condicion}";
+                sentencia = $"{sentencia} Where  {condicion}";
 
             try
             {

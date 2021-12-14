@@ -37,12 +37,43 @@ namespace PresentacionWeb
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                limpiar();
+            }
+        }
+
+        private void limpiar()
+        {
             txtTitulo.Text = string.Empty;
             txtTitulo.Focus();
-
             cargarDataGrid("");
         }
 
-       
+        protected void lnkModificar_Command(object sender, CommandEventArgs e)
+        {
+            //Session["_wrn"] = e.CommandArgument.ToString();
+        }
+
+        protected void grdLibros_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            grdLibros.PageIndex = e.NewPageIndex;
+            cargarDataGrid();
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            cargarDataGrid($"titulo like '%{txtTitulo.Text}%'");
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            limpiar();
+        }
+
+        protected void btnNuevo_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("wfrLibros.aspx");
+        }
     }
 }

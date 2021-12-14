@@ -70,6 +70,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="miScript.js" />
     <Content Include="Web.config" />
     <Content Include="wfrInicio.aspx" />
     <Content Include="wfrLibros.aspx" />

@@ -8,7 +8,7 @@ using System.Data;
 
 namespace LogicaNegocio
 {
-    class LNAutor
+    public class LNAutor
     {
         private string cadConexion;
         public LNAutor()

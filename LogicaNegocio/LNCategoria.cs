@@ -8,7 +8,7 @@ using System.Data;
 
 namespace LogicaNegocio
 {
-    class LNCategoria
+    public class LNCategoria
     {
         private string cadConexion;
         public LNCategoria()

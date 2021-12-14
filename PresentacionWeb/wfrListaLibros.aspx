@@ -36,20 +36,32 @@
                 </div>
 
                <div class="col-auto">
-                    <asp:TextBox ID="txtTitulo" runat="server" CssClass="form-control"></asp:TextBox>
+                    <asp:TextBox ID="txtTitulo" runat="server" CssClass="form-control" ToolTip="Ingrese una parte del título a buscar"></asp:TextBox>
+                   <asp:RequiredFieldValidator CssClass="text-start" ID="rfvTxtTitulo" runat="server" ErrorMessage="Debe agregar una parte del título antes de buscar" ControlToValidate ="txtTitulo" ForeColor="Red" ValidationGroup="1">*</asp:RequiredFieldValidator >
                 </div>
-
+                
                 <div class="col-auto">
-                    <asp:Button Cssclass="btn btn-primary" ID="btnBuscar" runat="server" Text="Buscar" />
+                    <asp:Button Cssclass="btn btn-primary" ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" ToolTip="Permite buscar el título del un libro" ValidationGroup="1" />
+                    
+                </div>
+                 <div class="col-auto">
+                    <asp:Button Cssclass="btn btn-secondary" ID="btnLimpiar" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" ToolTip="Permite limpiar el buscador y carga los libros" />
+                    
+                </div>
+                <div class="col-auto">
+                    <asp:Button Cssclass="btn btn-info" ID="btnNuevo" runat="server" Text="Nuevo Libro" ToolTip="Permite agregar un nuevo libro" OnClick="btnNuevo_Click" />
                 </div>
             </div>
+
+            
+            <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="1" ForeColor="Red" />
             <br />
-            <asp:GridView  Cssclass="container" ID="grdLibros" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None">
+            <asp:GridView  Cssclass="container text-start" ID="grdLibros" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" EmptyDataText="No hay datos de Libros  que mostrar, inserte uno nuevo." OnPageIndexChanging="grdLibros_PageIndexChanging" PageSize="15">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="lnkModificar" runat="server" CommandArgument='<%# Eval("Clave").ToString() %>'>Modificar</asp:LinkButton>
+                            <asp:LinkButton ID="lnkModificar" runat="server" CommandArgument='<%# Eval("Clave").ToString() %>' OnCommand="lnkModificar_Command">Modificar</asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField>
