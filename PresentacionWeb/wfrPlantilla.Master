@@ -26,7 +26,7 @@
     <a class="nav-link" href="wfrListaLibros.aspx">Libros</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Editoriales</a>
+    <a class="nav-link" href="wfrListarEditoriales.aspx">Editoriales</a>
   </li>
 </ul>
 
