@@ -73,7 +73,19 @@ namespace PresentacionWeb
 
         protected void btnNuevo_Click(object sender, EventArgs e)
         {
+            
             Response.Redirect("wfrLibros.aspx");
+        }
+
+        protected void lnkEliminar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void lnkEliminar_Command(object sender, CommandEventArgs e)
+        {
+            Session["_claveLibro"] = e.CommandArgument.ToString();
+            Response.Redirect("wfrLibroEliminar.aspx");
         }
     }
 }

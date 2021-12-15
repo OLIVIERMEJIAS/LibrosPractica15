@@ -7,18 +7,43 @@
     <div class="container">
         <div class="card-header text-center">   
             <h1>Mantenimiento de Libros</h1>
-
         </div>
         <br />
+        <%--alerts--%>
+        <% if (Session["_exito"] != null) { %>
+            <div class="alert alert-success" role="alert">
+                <%= Session["_exito"]%>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% Session["_exito"] = null;
+          }%>
+
+        <% if (Session["_wrn"] != null) { %>
+            <div class="alert alert-warning" role="alert">
+                <%= Session["_wrn"]%>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% Session["_wrn"] = null;
+          }%>
+
+        <% if (Session["_err"] != null) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= Session["_err"]%>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% Session["_err"] = null;
+          }%>
         <div class="row mt-3">
             <div class="col-2">
                 <asp:Label ID="Label1" runat="server" Text="Clave Libro"></asp:Label>
-                <asp:TextBox ID="txtClaveLibro" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="txtClaveLibro" runat="server" CssClass="form-control" ValidationGroup="5"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ErrorMessage="Clave de Libro incompleta!! Por favor, completela." ValidationGroup="5" ControlToValidate="txtClaveLibro" ForeColor="Red">*</asp:RequiredFieldValidator>
             </div>
 
             <div class="col-4">
                 <asp:Label ID="Label2" runat="server" Text="    Título"></asp:Label>
-                <asp:TextBox ID="txtTitulo" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="txtTitulo" runat="server" CssClass="form-control" ValidationGroup="5"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="Título de Libro incompleto!! Por favor, complételo." ValidationGroup="5" ControlToValidate="txtTitulo" ForeColor="Red">*</asp:RequiredFieldValidator>
             </div>
 
             <div class="col-3">
@@ -26,33 +51,35 @@
                 <asp:Label ID="Label3" runat="server" Text="    Autor"></asp:Label>
 
                 <div class="input-group mb-3">
-                 <asp:TextBox CssClass="form-control" ID="txtClaveAutor" runat="server"  ReadOnly="True" aria-describedby="btnModalAutor"></asp:TextBox>
+                 <asp:TextBox CssClass="form-control" ID="txtClaveAutor" runat="server"  ReadOnly="True" aria-describedby="btnModalAutor" ValidationGroup="5"></asp:TextBox>
                 
                     <button class="btn btn-outline-primary" type="button" id="btnModalAutor"
                     data-bs-toggle="modal"
-                    data-bs-target="#autorModal">Buscar</button>
-                
-                
+                    data-bs-target="#autorModal" style="width: 62px">Buscar</button>
                 </div>
-                
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Clave Autor incompleta!! Por favor, complétela." ValidationGroup="5" ControlToValidate="txtClaveAutor" ForeColor="Red">*</asp:RequiredFieldValidator>
             </div>
 
             <div class="col-3">
                 <asp:TextBox ID="txtIdCategoria" runat="server" CssClass="form-control" Visible="False"></asp:TextBox>
                 <asp:Label ID="Label4" runat="server" Text="    Categoría"></asp:Label>
                 <div class="input-group mb-3">
-                 <asp:TextBox CssClass="form-control" ID="TextBox1" runat="server"  ReadOnly="True" aria-describedby="btnModalCategoria"></asp:TextBox>
-
+                 <asp:TextBox CssClass="form-control" ID="txtClaveCategoria" runat="server"  ReadOnly="True" aria-describedby="btnModalCategoria" ValidationGroup="5"></asp:TextBox>
+                 
                 <button class="btn btn-outline-primary" type="button" id="btnModalCatgoria"
                     data-bs-toggle="modal"
                     data-bs-target="#modalCategorias">Buscar</button>
+                    
                 </div>
+                <asp:RequiredFieldValidator ID="rfvLibros" runat="server" ErrorMessage="Clave Categoría incompleta!! Por favor, complétela." ValidationGroup="5" ControlToValidate="txtClaveCategoria" ForeColor="Red">*</asp:RequiredFieldValidator>
             </div>
 
         </div>
         <br />
-         <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-primary"/>
-         <asp:Button ID="btnRegresar" runat="server" Text="Regresar" CssClass="btn btn-warning"/>
+         <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-primary" ValidationGroup="5" OnClick="btnGuardar_Click" />
+         <asp:Button ID="btnRegresar" runat="server" Text="Regresar" CssClass="btn btn-warning" OnClick="btnRegresar_Click"/>
+        
+        <asp:ValidationSummary ID="ValidationSummary3" runat="server" ValidationGroup="5" ForeColor="Red" Font-Italic="True" />
     </div> <%--Fin del container--%>
     <%--modales--%>    
     <%--modal categorias--%>   
@@ -77,12 +104,12 @@
                 <asp:Button ID="btnBuscarCategoria" runat="server" Text="Filtrar" CssClass="btn btn-secondary" OnClick="btnBuscarCategoria_Click"/>
             </div>
             <br />
-            <asp:GridView ID="gdvCategorias" runat="server" AutoGenerateColumns="False" BackColor="LightGoldenrodYellow" BorderColor="Tan" BorderWidth="1px" CellPadding="2" ForeColor="Black" GridLines="None" Width="100%">
+            <asp:GridView ID="gdvCategorias" runat="server" AutoGenerateColumns="False" BackColor="LightGoldenrodYellow" BorderColor="Tan" BorderWidth="1px" CellPadding="2" ForeColor="Black" GridLines="None" Width="100%" AllowPaging="True" OnPageIndexChanging="gdvCategorias_PageIndexChanging">
                 <AlternatingRowStyle BackColor="PaleGoldenrod" />
                 <Columns>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="lnkSeleccionarCategoria" runat="server" CommandArgument='<%# Eval("claveCategoria").ToString() %>'>Seleccionar</asp:LinkButton>
+                            <asp:LinkButton ID="lnkSeleccionarCategoria" runat="server" CommandArgument='<%# Eval("claveCategoria").ToString() %>' OnCommand="lnkSeleccionarCategoria_Command">Seleccionar</asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="claveCategoria" HeaderText="Claave Categoría" Visible="False" />
@@ -128,12 +155,12 @@
             </div>
         </div>
             <br />
-            <asp:GridView ID="grdAutores" runat="server" AutoGenerateColumns="False" BackColor="LightGoldenrodYellow" BorderColor="Tan" BorderWidth="1px" CellPadding="2" ForeColor="Black" GridLines="None" Width="100%">
+            <asp:GridView ID="grdAutores" runat="server" AutoGenerateColumns="False" BackColor="LightGoldenrodYellow" BorderColor="Tan" BorderWidth="1px" CellPadding="2" ForeColor="Black" GridLines="None" Width="100%" AllowPaging="True" OnPageIndexChanging="grdAutores_PageIndexChanging">
             <AlternatingRowStyle BackColor="PaleGoldenrod" />
             <Columns>
                 <asp:TemplateField>
                     <ItemTemplate>
-                        <asp:LinkButton ID="lnkSeleccionarAutor" runat="server" CommandArgument='<%# Eval("claveAutor").ToString() %>'>Seleccionar</asp:LinkButton>
+                        <asp:LinkButton ID="lnkSeleccionarAutor" runat="server" CommandArgument='<%# Eval("claveAutor").ToString() %>' OnCommand="lnkSeleccionarAutor_Command">Seleccionar</asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="claveAutor" HeaderText="Clave Autor" Visible="False" />

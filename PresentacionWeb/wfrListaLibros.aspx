@@ -61,13 +61,13 @@
                 <Columns>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="lnkModificar" runat="server" CommandArgument='<%# Eval("Clave").ToString() %>' OnCommand="lnkModificar_Command">Modificar</asp:LinkButton>
+                            <asp:LinkButton ID="lnkModificar" runat="server" CommandArgument='<%# Eval("Clave").ToString() %>' OnCommand="lnkModificar_Command" ForeColor="Blue">Modificar<i class="fas fa-pen-alt"></i></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
                             
-                            <asp:LinkButton ID="lnkEliminar" runat="server" CommandArgument='<%# Eval("Clave").ToString() %>'>Eliminar</asp:LinkButton>
+                            <asp:LinkButton ID="lnkEliminar" runat="server" CommandArgument='<%# Eval("Clave").ToString() %>' OnClick="lnkEliminar_Click" ForeColor="Red" OnCommand="lnkEliminar_Command">Eliminar<i class="fas fa-trash"></i></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="Clave" HeaderText="Clave" />
