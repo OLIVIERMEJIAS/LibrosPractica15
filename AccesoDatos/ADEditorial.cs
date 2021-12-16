@@ -78,47 +78,103 @@ namespace AccesoDatos
 
             return result;
         }
-            public bool existeRegistro(string condicion)
+
+        public int eliminar(string condicion)
         {
-            bool result = false;
-            object obEscalar;
+            int result = -1;
+            string sentencia = $"Delete from Editorial where {condicion}";
 
-            //1
-            SqlCommand comando = new SqlCommand();
             SqlConnection conexion = new SqlConnection(CadConec);
-            SqlDataReader datos;//NO SE INSTANCIA!!!
-
-            //2
-            comando.CommandText = $"Select 1 from Editorial Where {condicion}";
-            comando.Connection = conexion;
-
-            //3
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
             try
             {
                 conexion.Open();
-                obEscalar = comando.ExecuteScalar();
-
-                if (obEscalar != null)
-                    result = true;
-                else
-                    result = false;
-
+                result = comando.ExecuteNonQuery();
                 conexion.Close();
-
             }
             catch (Exception)
             {
                 conexion.Close();
-                throw new Exception("Error buscando datos de Editorial");
+                throw new Exception("No se ha logrado eliminar la editorial");
             }
-            //4
             finally
             {
-                comando.Dispose();
                 conexion.Dispose();
+                comando.Dispose();
             }
 
             return result;
         }
+
+        public string recuperarNombre(string condicion)
+        {
+            string result = string.Empty;
+            SqlConnection conec = new SqlConnection(CadConec);
+            string sentencia = $"Select nombre from Editorial where {condicion}";
+            SqlDataReader reader;
+            SqlCommand comando = new SqlCommand(sentencia, conec);
+            try
+            {
+                conec.Open();
+                reader = comando.ExecuteReader();
+                reader.Read();
+                result = reader[0].ToString();
+                conec.Close();
+            }
+            catch (Exception)
+            {
+                conec.Close();
+                throw new Exception("No se logró la conexión a datos");
+            }
+            finally
+            {
+                conec.Dispose();
+                comando.Dispose();
+            }
+            return result;
+        }
+
+        public bool existeRegistro(string condicion)
+        {
+        bool result = false;
+        object obEscalar;
+
+        //1
+        SqlCommand comando = new SqlCommand();
+        SqlConnection conexion = new SqlConnection(CadConec);
+            
+
+        //2
+        comando.CommandText = $"Select 1 from Editorial Where {condicion}";
+        comando.Connection = conexion;
+
+        //3
+        try
+        {
+            conexion.Open();
+            obEscalar = comando.ExecuteScalar();
+
+            if (obEscalar != null)
+                result = true;
+            else
+                result = false;
+
+            conexion.Close();
+
+        }
+        catch (Exception)
+        {
+            conexion.Close();
+            throw new Exception("Error buscando datos de Editorial");
+        }
+        //4
+        finally
+        {
+            comando.Dispose();
+            conexion.Dispose();
+        }
+
+        return result;
+    }
     }
 }

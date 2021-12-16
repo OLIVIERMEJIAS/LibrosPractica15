@@ -35,6 +35,36 @@ namespace LogicaNegocio
             }
         }
 
+        public int eliminar(string condicion)
+        {
+            ADEditorial adE = new ADEditorial(CadConec);
+
+            try
+            {
+                return adE.eliminar(condicion);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public string recuperarNombre(string condicion)
+        {
+            ADEditorial adE = new ADEditorial(CadConec);
+
+            try
+            {
+                return adE.recuperarNombre(condicion);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public bool existeRegistro(string condicion)
         {
             bool result = false;

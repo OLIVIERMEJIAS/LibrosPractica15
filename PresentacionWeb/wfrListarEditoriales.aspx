@@ -2,26 +2,36 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="frmhead" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="frmBody" runat="server">
-   <div class="container">
+    <div class="container">
         <div class="card-header text-center">
             <h1>
                 Gestionar Editoriales
             </h1>
         </div>
             <br />
-    <% if (Session["_wrn"] != null) { %>
-            <div class="alert alert-warning" role="alert">
-                <%= Session["_wrn"]%>
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-<% Session["_wrn"] = null;
-          }%>
-        <% if (Session["_err"] != null) { %>
-            <div class="alert alert-danger" role="alert">
-                <%= Session["_err"]%>
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-<% Session["_err"] = null;
+                <% if (Session["_wrn"] != null) { %>
+                        <div class="alert alert-warning" role="alert">
+                            <%= Session["_wrn"]%>
+                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                <% Session["_wrn"] = null;
+                          }%>
+
+                <% if (Session["_err"] != null) { %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= Session["_err"]%>
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                 <% Session["_err"] = null;
+                            }%>
+     
+         
+                <% if (Session["_exito"] != null) { %>
+                    <div class="alert alert-success" role="alert">
+                        <%= Session["_exito"]%>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <% Session["_exito"] = null;
           }%>
      <div class="row mt-3 " >
                 <div class="col-auto">
@@ -59,12 +69,12 @@
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="lnkEliminar" runat="server" CommandArgument='<%# Eval("claveEditorial").ToString() %>'>Eliminar</asp:LinkButton>
+                            <asp:LinkButton ID="lnkEliminar" runat="server" CommandArgument='<%# Eval("claveEditorial").ToString() %>' OnCommand="lnkEliminar_Command">Eliminar</asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="lnkVerEjemplares" runat="server" CommandArgument='<%# Eval("claveEditorial").ToString() %>'>Ver Ejemplares</asp:LinkButton>
+                            <asp:LinkButton ID="lnkVerEjemplares" runat="server" CommandArgument='<%# Eval("claveEditorial").ToString() %>' OnCommand="lnkVerEjemplares_Command">Ver Ejemplares</asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="claveEditorial" HeaderText="Clave Editorial" Visible="False" />

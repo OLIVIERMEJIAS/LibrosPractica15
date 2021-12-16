@@ -12,6 +12,7 @@ namespace PresentacionWeb
     public partial class wfrListarEditoriales : System.Web.UI.Page
     {
         LNEditorial lnE = new LNEditorial(Config.getCadConec);
+        LNEjemplar lnEj = new LNEjemplar(Config.getCadConec);
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -65,6 +66,38 @@ namespace PresentacionWeb
         protected void btnNuevo_Click(object sender, EventArgs e)
         {
             Response.Redirect("wfrEditoriales.aspx");
+        }
+
+        protected void lnkEliminar_Command(object sender, CommandEventArgs e)
+        {
+            if (lnE.existeRegistro($"claveEditorial = '{e.CommandArgument}'"))
+            {
+                if (!lnEj.existenEjemplares($"'{e.CommandArgument}'"))
+                {
+                    try
+                    {
+                        Session["_nombreEdit"] = lnE.recuperarNombre($"claveEditorial = '{e.CommandArgument}'");
+                        Session["_claveEditorial"] = e.CommandArgument;
+                        Response.Redirect("wfrEditorialEliminar.aspx");
+                    }
+                    catch (Exception ex)
+                    {
+
+                        Session["_err"] = ex.Message;
+                    }
+                }
+                else
+                    Session["_err"] = "Esta Editorial está relacionada a Ejemplares, no puede eliminarse!!";
+                
+            }
+            else
+                Session["_err"] = "Esta editorial no se puede  eliminar, puesto que ya fue eliminada!!";
+        }
+
+        protected void lnkVerEjemplares_Command(object sender, CommandEventArgs e)
+        {
+            Session["_claveEditorial"] = e.CommandArgument;
+            Response.Redirect("wfrListarEjemplares.aspx");
         }
     }
 }

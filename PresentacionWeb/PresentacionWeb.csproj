@@ -72,6 +72,7 @@
   <ItemGroup>
     <Content Include="miScript.js" />
     <Content Include="Web.config" />
+    <Content Include="wfrEditorialEliminar.aspx" />
     <Content Include="wfrEditoriales.aspx" />
     <Content Include="wfrInicio.aspx" />
     <Content Include="wfrLibroEliminar.aspx" />
@@ -81,6 +82,13 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="wfrEditorialEliminar.aspx.cs">
+      <DependentUpon>wfrEditorialEliminar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfrEditorialEliminar.aspx.designer.cs">
+      <DependentUpon>wfrEditorialEliminar.aspx</DependentUpon>
+    </Compile>
     <Compile Include="wfrEditoriales.aspx.cs">
       <DependentUpon>wfrEditoriales.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -123,6 +131,13 @@
     <Compile Include="wfrListarEditoriales.aspx.designer.cs">
       <DependentUpon>wfrListarEditoriales.aspx</DependentUpon>
     </Compile>
+    <Compile Include="wfrListarEjemplares.aspx.cs">
+      <DependentUpon>wfrListarEjemplares.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfrListarEjemplares.aspx.designer.cs">
+      <DependentUpon>wfrListarEjemplares.aspx</DependentUpon>
+    </Compile>
     <Compile Include="wfrPlantilla.Master.cs">
       <DependentUpon>wfrPlantilla.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -140,6 +155,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="wfrListarEditoriales.aspx" />
+    <Content Include="wfrListarEjemplares.aspx" />
     <Content Include="wfrPlantilla.Master" />
   </ItemGroup>
   <ItemGroup>

@@ -37,6 +37,7 @@ namespace LogicaNegocio
             return cate;
         }
 
+
         public DataTable ListarRegistros(string condicion)
         {
             DataTable result;
