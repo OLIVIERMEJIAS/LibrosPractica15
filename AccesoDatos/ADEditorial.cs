@@ -79,6 +79,37 @@ namespace AccesoDatos
             return result;
         }
 
+        public int modificar(EEditorial edit,string claveVieja)
+        {
+            int result = -1;
+            string sentencia = "Update Editorial Set claveEditorial = @clave, nombre = @nom " +
+                $"where claveEditorial = '{claveVieja}'";
+
+            SqlConnection conexion = new SqlConnection(CadConec);
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+
+            comando.Parameters.AddWithValue("@clave", edit.ClaveEditorial);
+            comando.Parameters.AddWithValue("@nom", edit.Nombre);
+            try
+            {
+                conexion.Open();
+                result = comando.ExecuteNonQuery();
+                conexion.Close();
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se ha logrado modificar la editorial");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
+            }
+
+            return result;
+        }
+
         public int eliminar(string condicion)
         {
             int result = -1;

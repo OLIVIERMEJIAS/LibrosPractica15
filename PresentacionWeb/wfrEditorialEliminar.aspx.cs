@@ -34,25 +34,25 @@ namespace PresentacionWeb
                 if (lnE.eliminar($"claveEditorial = '{Session["_claveEditorial"]}'") != -1)
                 {
                     Session["_exito"] = "Editorial Eliminada con Éxito!!!";
-                    Response.Redirect("wfrListarEditoriales.aspx");
+                    Response.Redirect("wfrListarEditoriales.aspx",false);
                 }
                 else
                 {
                     Session["_err"] = "No se pude borrar la Editorial, esta ya no existe!";
-                    Response.Redirect("wfrListarEditoriales.aspx");
+                    Response.Redirect("wfrListarEditoriales.aspx",false);
                 }
             }
             catch (Exception ex)
             {
 
                 Session["_err"] = ex.Message;
-                Response.Redirect("wfrListarEditoriales.aspx");
+                Response.Redirect("wfrListarEditoriales.aspx",false);
             }
         }
 
         protected void btnRegresar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("wfrListarEditoriales.aspx");
+            Response.Redirect("wfrListarEditoriales.aspx",false);
         }
     }
 }

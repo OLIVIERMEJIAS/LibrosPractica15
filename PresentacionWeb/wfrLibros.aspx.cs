@@ -101,7 +101,7 @@ namespace PresentacionWeb
                         Session["_err"] = $"Error: {ex.Message}";
                     }
 
-                    
+
 
                 }
             }
@@ -191,11 +191,11 @@ namespace PresentacionWeb
             Session.Remove("_wrn");
             Session.Remove("_exito");
             Session.Remove("_claveLibro");
-            Response.Redirect("wfrListaLibros.aspx",false);
+            Response.Redirect("wfrListaLibros.aspx", false);
         }
-    
 
-        protected bool hayCambios (ref bool bCL, ref bool bT,
+
+        protected bool hayCambios(ref bool bCL, ref bool bT,
             ref bool bAu,
             ref bool bCat)
         {
@@ -213,7 +213,7 @@ namespace PresentacionWeb
                 bCat = true;
             if (!bCL && !bT && !bAu && !bCat)
                 return false;
-            else 
+            else
                 return true;
         }
 
@@ -224,21 +224,18 @@ namespace PresentacionWeb
             return libro = new ELibro(txtClaveLibro.Text, txtTitulo.Text, txtIdAutor.Text, cate, false);
         }
 
-        protected void verificarLibroModificar(ELibro lib,Object sender, EventArgs e)
+        protected void modificar(ELibro lib, Object sender, EventArgs e)
         {
-            if (lnL.libroRepetido(lib) == false)
+
+            if (lnL.modificar(lib, Request.Cookies["MyCookie"]["_claveLibro"]) > 0)
             {
-                if (lnL.modificar(lib, Request.Cookies["MyCookie"]["_claveLibro"]) > 0)
-                {
-                    Session["_exito"] = "El libro se ha modificado de manera exitosa";
-                    Session.Remove("_claveLibro");
-                    Response.Redirect("wfrListaLibros.aspx",false);
-                }
-                else
-                    Session["_wrn"] = "No se ha podido modificar el libro!!";
+                Session["_exito"] = "El libro se ha modificado de manera exitosa";
+                Session.Remove("_claveLibro");
+                Response.Redirect("wfrListaLibros.aspx", false);
             }
             else
-                Session["_wrn"] = "Ese título ya existe para el autor seleccionado!!";
+                Session["_wrn"] = "No se ha podido modificar el libro!!";
+
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -254,7 +251,7 @@ namespace PresentacionWeb
                     if (hayCambios(ref bCL, ref bT, ref bAu, ref bCat))
                     {
 
-                        
+
                         if (bCL)
                         {
                             if (lnL.claveLibroRepetida(txtClaveLibro.Text) == false)
@@ -262,7 +259,18 @@ namespace PresentacionWeb
                                 if (bT || bAu)
                                 {
                                     ELibro lib = crearLibro();
-                                    verificarLibroModificar(lib,sender,e);
+                                    if (lnL.libroRepetido(lib) == false)
+                                    {
+                                        modificar(lib, sender, e);
+                                    }
+                                    else
+                                        Session["_wrn"] = "Atención este título de Libro ya se encuentra con este Autor. Debe cambiarlo!!";
+
+                                }
+                                else
+                                {
+                                    ELibro lib = crearLibro();
+                                    modificar(lib, sender, e);
                                 }
                             }
                             else
@@ -270,10 +278,21 @@ namespace PresentacionWeb
                         }
                         else
                             if (bT || bAu)
-                        {
-                            ELibro lib = crearLibro();
-                            verificarLibroModificar(lib,sender,e);
-                        }
+                            {
+                                ELibro lib = crearLibro();
+                                if (lnL.libroRepetido(lib) == false)
+                                {
+                                    modificar(lib, sender, e);
+                                }
+                                else
+                                    Session["_wrn"] = "Atención este título de Libro ya se encuentra con este Autor. Debe cambiarlo!!";
+
+                            }
+                            else
+                            {
+                                ELibro lib = crearLibro();
+                                modificar(lib, sender, e);
+                            }
                     }
                     else
                         Session["_wrn"] = "No hay cambios que actualizar!!";

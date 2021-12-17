@@ -99,5 +99,11 @@ namespace PresentacionWeb
             Session["_claveEditorial"] = e.CommandArgument;
             Response.Redirect("wfrListarEjemplares.aspx");
         }
+
+        protected void lnkModificar_Command(object sender, CommandEventArgs e)
+        {
+            Session["_claveEditorial"] = e.CommandArgument;
+            Response.Redirect("wfrEditoriales.aspx", false);
+        }
     }
 }

@@ -21,6 +21,20 @@ namespace LogicaNegocio
             CadConec = cad;
         }
 
+        public int modificar(EEditorial edit, string claveVieja)
+        {
+            ADEditorial adE = new ADEditorial(CadConec);
+            try
+            {
+                return adE.modificar(edit, claveVieja);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public int insertar(EEditorial edit)
         {
             ADEditorial adE = new ADEditorial(CadConec);

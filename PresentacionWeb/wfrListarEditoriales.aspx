@@ -64,7 +64,7 @@
                 <Columns>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="lnkModificar" runat="server" CommandArgument='<%# Eval("claveEditorial").ToString() %>'>Modificar</asp:LinkButton>
+                            <asp:LinkButton ID="lnkModificar" runat="server" CommandArgument='<%# Eval("claveEditorial").ToString() %>' OnCommand="lnkModificar_Command">Modificar</asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField>
