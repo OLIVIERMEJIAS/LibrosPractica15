@@ -72,13 +72,13 @@
                 <Columns>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="lnkModificar" runat="server" CommandArgument='<%# Eval("Clave").ToString() %>' OnCommand="lnkModificar_Command" ForeColor="Blue">Modificar<i class="fas fa-pen-alt"></i></asp:LinkButton>
+                            <asp:LinkButton ID="lnkModificar" runat="server" CommandArgument='<%# Eval("Clave").ToString() %>' OnCommand="lnkModificar_Command" ForeColor="Blue"><i class="fas fa-pen-alt"></i></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
                             
-                            <asp:LinkButton ID="lnkEliminar" runat="server" CommandArgument='<%# Eval("Clave").ToString() %>' ForeColor="Red" OnCommand="lnkEliminar_Command" ToolTip="Eliminar un registro">Eliminar<i class="fas fa-trash"></i></asp:LinkButton>
+                            <asp:LinkButton ID="lnkEliminar" runat="server" CommandArgument='<%# Eval("Clave").ToString() %>' ForeColor="Red" OnCommand="lnkEliminar_Command" ToolTip="Eliminar un registro"><i class="fas fa-trash"></i></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="Clave" HeaderText="Clave" />

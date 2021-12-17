@@ -11,21 +11,32 @@ namespace PresentacionWeb
     public partial class wfrEditorialEliminar : System.Web.UI.Page
     {
         LNEditorial lnE = new LNEditorial(Config.getCadConec);
+        /// <summary>
+        /// Lllena los label con la información de las variables 
+        /// de sessión con los datos de la lista de editoriales
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            txtClaveEditorial.Text += Session["_claveEditorial"];
-            txtNombreEdit.Text += Session["_nombreEdit"];
+            lblClaveEditorial.Text += Session["_claveEditorial"];
+            lblNombreEdit.Text += Session["_nombreEdit"];
         }
 
         protected void limpiar()
         {
-            txtClaveEditorial.Text = "";
-            txtNombreEdit.Text = "";
+            lblClaveEditorial.Text = "";
+            lblNombreEdit.Text = "";
             Session.Remove("_claveEditorial");
             Session.Remove("_nombreEdit");
 
         }
-
+        /// <summary>
+        /// Eliminación de una editorial, cuando ya pasó por la validación de si tiene
+        /// ejemplares asociados en el formulario de la lsta de editoriales
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
             try
@@ -38,6 +49,7 @@ namespace PresentacionWeb
                 }
                 else
                 {
+                    //si la editorial ya no existe
                     Session["_err"] = "No se pude borrar la Editorial, esta ya no existe!";
                     Response.Redirect("wfrListarEditoriales.aspx",false);
                 }

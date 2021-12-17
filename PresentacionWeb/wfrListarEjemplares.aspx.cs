@@ -12,7 +12,11 @@ namespace PresentacionWeb
     public partial class wfrListarEjemplares : System.Web.UI.Page
     {
         LNEjemplar lnE = new LNEjemplar(Config.getCadConec);
-        protected void cargarLibros(string condicion)
+        /// <summary>
+        /// Carga la lista de ejemplares
+        /// </summary>
+        /// <param name="condicion"></param>
+        protected void cargarEjem(string condicion)
         {
             DataTable dt;
             try
@@ -27,17 +31,30 @@ namespace PresentacionWeb
                 Session["_err"] = ex.Message;
             }
         }
+        /// <summary>
+        /// Recibe la clave de la editorial y carga los ejemplares, si los hay
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            cargarLibros($"'{Session["_claveEditorial"]}'");
+            cargarEjem($"'{Session["_claveEditorial"]}'");
         }
-
+        /// <summary>
+        /// Cambia el índice de las páginas de grid view de ejemplares
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void gdvEjemplares_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gdvEjemplares.PageIndex = e.NewPageIndex;
-            cargarLibros($"'{Session["_claveEditorial"]}'");
+            cargarEjem($"'{Session["_claveEditorial"]}'");
         }
-
+        /// <summary>
+        /// Redirecciona a la lista de editoriales
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnRegresar_Click(object sender, EventArgs e)
         {
             Response.Redirect("wfrListarEditoriales.aspx");

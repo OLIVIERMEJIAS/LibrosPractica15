@@ -18,7 +18,7 @@
 
 </head>
 <body>
-    <ul class="nav justify-content-center">
+    <ul class="container nav justify-content-center bg-dark">
   <li class="nav-item">
     <a class="nav-link active" aria-current="page" href="wfrInicio.aspx">Inicio</a>
   </li>

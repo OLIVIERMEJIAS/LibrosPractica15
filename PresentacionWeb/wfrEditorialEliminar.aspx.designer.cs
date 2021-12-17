@@ -15,22 +15,22 @@ namespace PresentacionWeb
     {
 
         /// <summary>
-        /// Control txtClaveEditorial.
+        /// Control lblClaveEditorial.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtClaveEditorial;
+        protected global::System.Web.UI.WebControls.Label lblClaveEditorial;
 
         /// <summary>
-        /// Control txtNombreEdit.
+        /// Control lblNombreEdit.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtNombreEdit;
+        protected global::System.Web.UI.WebControls.Label lblNombreEdit;
 
         /// <summary>
         /// Control btnEliminar.

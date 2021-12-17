@@ -64,20 +64,20 @@
                 <Columns>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="lnkModificar" runat="server" CommandArgument='<%# Eval("claveEditorial").ToString() %>' OnCommand="lnkModificar_Command">Modificar</asp:LinkButton>
+                            <asp:LinkButton ID="lnkModificar" runat="server" CommandArgument='<%# Eval("claveEditorial").ToString() %>' OnCommand="lnkModificar_Command"><i class="fas fa-pen-alt"></i></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="lnkEliminar" runat="server" CommandArgument='<%# Eval("claveEditorial").ToString() %>' OnCommand="lnkEliminar_Command">Eliminar</asp:LinkButton>
+                            <asp:LinkButton ID="lnkEliminar" runat="server" CommandArgument='<%# Eval("claveEditorial").ToString() %>' OnCommand="lnkEliminar_Command" ForeColor="Red"><i class="fas fa-trash"></i></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="lnkVerEjemplares" runat="server" CommandArgument='<%# Eval("claveEditorial").ToString() %>' OnCommand="lnkVerEjemplares_Command">Ver Ejemplares</asp:LinkButton>
+                            <asp:LinkButton ID="lnkVerEjemplares" runat="server" CommandArgument='<%# Eval("claveEditorial").ToString() %>' OnCommand="lnkVerEjemplares_Command" ForeColor="Green"><i class="fas fa-book">(Ejemplares)</i></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:BoundField DataField="claveEditorial" HeaderText="Clave Editorial" Visible="False" />
+                    <asp:BoundField DataField="claveEditorial" HeaderText="Clave Editorial" />
                     <asp:BoundField DataField="nombre" HeaderText="Editorial" />
                 </Columns>
                 <FooterStyle BackColor="Tan" />

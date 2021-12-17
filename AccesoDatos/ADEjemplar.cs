@@ -19,7 +19,11 @@ namespace AccesoDatos
         {
             CadConec = cad;
         }
-
+        /// <summary>
+        /// Método permite buscar si hay ejemplares relacionados a un ejemplar
+        /// </summary>
+        /// <param name="condicion"></param>
+        /// <returns></returns>
         public bool existenEjemplares(string condicion)
         {
             bool result = false;
@@ -52,7 +56,11 @@ namespace AccesoDatos
 
             return result;
         }
-
+        /// <summary>
+        /// Permite listar todos los ejemplares relacionados a una editorial
+        /// </summary>
+        /// <param name="condicion"></param>
+        /// <returns></returns>
         public DataTable listarTodos(string condicion)
         {
             DataTable dt = new DataTable();

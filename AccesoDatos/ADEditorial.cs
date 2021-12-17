@@ -20,7 +20,11 @@ namespace AccesoDatos
         {
             CadConec = cad;
         }
-
+        /// <summary>
+        /// Permite listar todas las editoriales
+        /// </summary>
+        /// <param name="condicion"></param>
+        /// <returns></returns>
         public DataTable listarTodos(string condicion)
         {
             DataTable dt = new DataTable();
@@ -47,7 +51,11 @@ namespace AccesoDatos
             }
             return dt;
         }
-
+        /// <summary>
+        /// Permite insertar una nueva editorial con un objeto entrante de tipo editorial
+        /// </summary>
+        /// <param name="edit"></param>
+        /// <returns></returns>
         public int insertar(EEditorial edit)
         {
             int result = -1;
@@ -78,7 +86,13 @@ namespace AccesoDatos
 
             return result;
         }
-
+        /// <summary>
+        /// Permite modificar una editorial a partir de un objeto editorial y
+        /// la clave antigua de la editorial que se desea modificar
+        /// </summary>
+        /// <param name="edit"></param>
+        /// <param name="claveVieja"></param>
+        /// <returns></returns>
         public int modificar(EEditorial edit,string claveVieja)
         {
             int result = -1;
@@ -109,7 +123,11 @@ namespace AccesoDatos
 
             return result;
         }
-
+        /// <summary>
+        /// Permite eliminar una editorial a partir de una condición
+        /// </summary>
+        /// <param name="condicion"></param>
+        /// <returns></returns>
         public int eliminar(string condicion)
         {
             int result = -1;
@@ -136,7 +154,11 @@ namespace AccesoDatos
 
             return result;
         }
-
+        /// <summary>
+        /// Permite recuperar el nombre de una editorial a partir de una condición
+        /// </summary>
+        /// <param name="condicion"></param>
+        /// <returns></returns>
         public string recuperarNombre(string condicion)
         {
             string result = string.Empty;
@@ -164,7 +186,12 @@ namespace AccesoDatos
             }
             return result;
         }
-
+        /// <summary>
+        /// Permite saber si la clave de uan editorial ya existe o si el 
+        /// nombre de una eidtorial ya existe mediante uan condición
+        /// </summary>
+        /// <param name="condicion"></param>
+        /// <returns></returns>
         public bool existeRegistro(string condicion)
         {
         bool result = false;

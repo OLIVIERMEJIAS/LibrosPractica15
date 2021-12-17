@@ -19,7 +19,11 @@ namespace LogicaNegocio
         {
             CadConec = cad;
         }
-
+        /// <summary>
+        /// Permite el acceso a la capa de acceso a datos de ejemplares para listar todos los registros
+        /// </summary>
+        /// <param name="condicion"></param>
+        /// <returns></returns>
         public DataTable listarTodos(string condicion)
         {
             ADEjemplar adE = new ADEjemplar(CadConec);
@@ -33,7 +37,12 @@ namespace LogicaNegocio
                 throw ex;
             }
         }
-
+        /// <summary>
+        /// Permite el acceso a la capa de acceso a datos de ejemplares para saber si existen 
+        /// ejemplares asociados a una editorial
+        /// </summary>
+        /// <param name="condicion"></param>
+        /// <returns></returns>
         public bool existenEjemplares(string condicion)
         {
             ADEjemplar adE = new ADEjemplar(CadConec);
