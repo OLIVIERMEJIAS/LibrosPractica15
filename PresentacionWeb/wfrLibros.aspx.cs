@@ -84,7 +84,7 @@ namespace PresentacionWeb
                             recuperarCategoria(libro.Clavecategoria.ClaveCategoria);
                             HttpCookie cookie = new HttpCookie("MyCookie");
                             cookie["_claveLibro"] = libro.ClaveLibro;
-                            cookie["_tuitulo"] = libro.Titulo;
+                            cookie["_titulo"] = libro.Titulo;
                             cookie["_claveAutor"] = libro.ClaveAutor;
                             cookie["_claveCategoria"] = libro.Clavecategoria.ClaveCategoria;
                             Response.Cookies.Add(cookie);
@@ -191,7 +191,7 @@ namespace PresentacionWeb
             Session.Remove("_wrn");
             Session.Remove("_exito");
             Session.Remove("_claveLibro");
-            Response.Redirect("wfrListaLibros.aspx");
+            Response.Redirect("wfrListaLibros.aspx",false);
         }
     
 
@@ -207,9 +207,9 @@ namespace PresentacionWeb
                 bCL = true;
             if (txtTitulo.Text != tit)
                 bT = true;
-            if (txtClaveAutor.Text != claveA)
+            if (txtIdAutor.Text != claveA)
                 bAu = true;
-            if (txtClaveCategoria.Text != claveC)
+            if (txtIdCategoria.Text != claveC)
                 bCat = true;
             if (!bCL && !bT && !bAu && !bCat)
                 return false;
@@ -217,11 +217,28 @@ namespace PresentacionWeb
                 return true;
         }
 
-        protected void crearLibro()
+        protected ELibro crearLibro()
         {
             ECategoria cate = new ECategoria();
             cate.ClaveCategoria = txtIdCategoria.Text;
-            libro = new ELibro(txtClaveLibro.Text, txtTitulo.Text, txtIdAutor.Text, cate, false);
+            return libro = new ELibro(txtClaveLibro.Text, txtTitulo.Text, txtIdAutor.Text, cate, false);
+        }
+
+        protected void verificarLibroModificar(ELibro lib,Object sender, EventArgs e)
+        {
+            if (lnL.libroRepetido(lib) == false)
+            {
+                if (lnL.modificar(lib, Request.Cookies["MyCookie"]["_claveLibro"]) > 0)
+                {
+                    Session["_exito"] = "El libro se ha modificado de manera exitosa";
+                    Session.Remove("_claveLibro");
+                    Response.Redirect("wfrListaLibros.aspx",false);
+                }
+                else
+                    Session["_wrn"] = "No se ha podido modificar el libro!!";
+            }
+            else
+                Session["_wrn"] = "Ese título ya existe para el autor seleccionado!!";
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -237,8 +254,29 @@ namespace PresentacionWeb
                     if (hayCambios(ref bCL, ref bT, ref bAu, ref bCat))
                     {
 
-                        crearLibro();
+                        
+                        if (bCL)
+                        {
+                            if (lnL.claveLibroRepetida(txtClaveLibro.Text) == false)
+                            {
+                                if (bT || bAu)
+                                {
+                                    ELibro lib = crearLibro();
+                                    verificarLibroModificar(lib,sender,e);
+                                }
+                            }
+                            else
+                                Session["_wrn"] = "Atención la clave del Libro ya está en uso. Debe cambiarla!!";
+                        }
+                        else
+                            if (bT || bAu)
+                        {
+                            ELibro lib = crearLibro();
+                            verificarLibroModificar(lib,sender,e);
+                        }
                     }
+                    else
+                        Session["_wrn"] = "No hay cambios que actualizar!!";
 
 
                 }
@@ -246,23 +284,16 @@ namespace PresentacionWeb
                 {
                     if (lnL.claveLibroRepetida(txtClaveLibro.Text) == false)
                     {
-                        crearLibro();
+                        ELibro libro = crearLibro();
                         if (lnL.libroRepetido(libro) == false)
                         {
-                            if (Session["_claveLibro"] == null)
-                            {
-                                if (lnL.insertar(libro) > 0)
+                             if (lnL.insertar(libro) > 0)
                                 {
                                     Session["_exito"] = "El libro se ha insertado de manera exitosa";
                                     limpiar();
                                 }
                                 else
                                     Session["_wrn"] = "No se ha podido guardar el libro!!";
-                            }
-                            else
-                            {
-
-                            }
                         }
                         else
                             Session["_wrn"] = "Ese título ya existe para el autor seleccionado!!";
