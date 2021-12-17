@@ -305,6 +305,35 @@ namespace AccesoDatos
             return result;
         }
 
+        public int eliminar(string clave)
+        {
+            int result = -1;
+            string sentecia = $"Delete from Libro Where claveLibro= '{clave}'";
+
+            SqlConnection conexion = new SqlConnection(cadConexion);
+            SqlCommand comando = new SqlCommand(sentecia, conexion);
+
+
+            try
+            {
+                conexion.Open();
+                result = comando.ExecuteNonQuery();//0 1
+                conexion.Close();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Se ha presentado un error eliminando. No se ha logrado!");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
+            }
+
+            return result;
+        }
+
+
         public string eliminarProcedure(ELibro libro) {
 
             string sentencia = "EliminarLibro";

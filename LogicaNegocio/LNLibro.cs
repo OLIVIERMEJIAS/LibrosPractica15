@@ -24,6 +24,20 @@ namespace LogicaNegocio
         #endregion
 
         #region Metrodos
+        public int eliminar(string clave)
+        {
+            ADLibro adL = new ADLibro(cadConexion);
+            try
+            {
+                return adL.eliminar(clave);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public bool libroRepetido(ELibro libro) {
             bool result = false;
             ADLibro adLibro = new ADLibro(cadConexion);

@@ -25,6 +25,8 @@ namespace PresentacionWeb
             txtClaveCategoria.Text = string.Empty;
             txtNombreAutor.Text = string.Empty;
             txtCategoria.Text = string.Empty;
+            cargarAutores();
+            cargarCategorias();
         }
         private void cargarCategorias(string condicion = "")
         {
@@ -32,7 +34,7 @@ namespace PresentacionWeb
             try
             {
                 dt = lnC.ListarRegistros(condicion);
-                if(dt != null)
+                if (dt != null)
                 {
                     gdvCategorias.DataSource = dt;
                     gdvCategorias.DataBind();
@@ -50,7 +52,7 @@ namespace PresentacionWeb
             try
             {
                 dt = lnA.ListarRegistros(condicion);
-                if(dt != null)
+                if (dt != null)
                 {
                     grdAutores.DataSource = dt;
                     grdAutores.DataBind();
@@ -64,15 +66,53 @@ namespace PresentacionWeb
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            cargarAutores();
-            cargarCategorias();
+            string condicion = "";
+            if (!IsPostBack)
+            {
+                limpiar();
+                if (Session["_claveLibro"] != null)
+                {
+                    condicion = $"claveLibro = '{Session["_claveLibro"].ToString()}'";
+                    try
+                    {
+                        libro = lnL.buscarRegistro(condicion);
+                        if (libro != null)
+                        {
+                            txtClaveLibro.Text = libro.ClaveLibro;
+                            txtTitulo.Text = libro.Titulo;
+                            recuperarAutor(libro.ClaveAutor);
+                            recuperarCategoria(libro.Clavecategoria.ClaveCategoria);
+                            HttpCookie cookie = new HttpCookie("MyCookie");
+                            cookie["_claveLibro"] = libro.ClaveLibro;
+                            cookie["_tuitulo"] = libro.Titulo;
+                            cookie["_claveAutor"] = libro.ClaveAutor;
+                            cookie["_claveCategoria"] = libro.Clavecategoria.ClaveCategoria;
+                            Response.Cookies.Add(cookie);
+                        }
+                        else
+                        {
+                            Session["_wrn"] = "Este libro ya no existe!!";
+                            btnRegresar_Click(sender, e);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                        Session["_err"] = $"Error: {ex.Message}";
+                    }
+
+                    
+
+                }
+            }
+
         }
 
         protected void btnBuscarAutor_Click(object sender, EventArgs e)
         {
             string javaScript = "AbrirModal();";
             cargarAutores($"nombre like '%{txtNombreAutor.Text}%'");
-            ScriptManager.RegisterStartupScript(this,this.GetType(),"script",javaScript,true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "script", javaScript, true);
         }
 
         protected void btnBuscarCategoria_Click(object sender, EventArgs e)
@@ -106,7 +146,7 @@ namespace PresentacionWeb
             try
             {
                 autor = lnA.BuscarRegistro(condicion);
-                if(autor != null)
+                if (autor != null)
                 {
                     txtIdAutor.Text = autor.ClaveAutor;
                     txtClaveAutor.Text = autor.ApPaterno + " " + autor.Nombre;
@@ -132,7 +172,7 @@ namespace PresentacionWeb
             try
             {
                 categoria = lnC.BuscarRegistro(condicion);
-                if(categoria != null)
+                if (categoria != null)
                 {
                     txtIdCategoria.Text = categoria.ClaveCategoria;
                     txtClaveCategoria.Text = categoria.Descripcion;
@@ -150,40 +190,92 @@ namespace PresentacionWeb
             Session.Remove("_err");
             Session.Remove("_wrn");
             Session.Remove("_exito");
+            Session.Remove("_claveLibro");
             Response.Redirect("wfrListaLibros.aspx");
+        }
+    
+
+        protected bool hayCambios (ref bool bCL, ref bool bT,
+            ref bool bAu,
+            ref bool bCat)
+        {
+            string claveL = Request.Cookies["MyCookie"]["_claveLibro"];
+            string tit = Request.Cookies["MyCookie"]["_titulo"];
+            string claveA = Request.Cookies["MyCookie"]["_claveAutor"];
+            string claveC = Request.Cookies["MyCookie"]["_claveCategoria"];
+            if (txtClaveLibro.Text != claveL)
+                bCL = true;
+            if (txtTitulo.Text != tit)
+                bT = true;
+            if (txtClaveAutor.Text != claveA)
+                bAu = true;
+            if (txtClaveCategoria.Text != claveC)
+                bCat = true;
+            if (!bCL && !bT && !bAu && !bCat)
+                return false;
+            else 
+                return true;
+        }
+
+        protected void crearLibro()
+        {
+            ECategoria cate = new ECategoria();
+            cate.ClaveCategoria = txtIdCategoria.Text;
+            libro = new ELibro(txtClaveLibro.Text, txtTitulo.Text, txtIdAutor.Text, cate, false);
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-                try
+            try
+            {
+                if (Session["_claveLibro"] != null)
+                {
+                    bool bCL = false;
+                    bool bT = false;
+                    bool bAu = false;
+                    bool bCat = false;
+                    if (hayCambios(ref bCL, ref bT, ref bAu, ref bCat))
+                    {
+
+                        crearLibro();
+                    }
+
+
+                }
+                else
                 {
                     if (lnL.claveLibroRepetida(txtClaveLibro.Text) == false)
                     {
-                        //modificar y revisar cuando haya que actualizar
-                        ECategoria cate = new ECategoria();
-                        cate.ClaveCategoria = txtIdCategoria.Text;
-                        libro = new ELibro(txtClaveLibro.Text, txtTitulo.Text, txtIdAutor.Text, cate, false);
-                        if (lnL.libroRepetido(libro) == false) //TODO: CARGAR LIBRO
+                        crearLibro();
+                        if (lnL.libroRepetido(libro) == false)
                         {
-                            if (lnL.insertar(libro) > 0)
+                            if (Session["_claveLibro"] == null)
                             {
-                                Session["_exito"] = "El libro se ha insertado de manera exitosa";
-                            limpiar();
+                                if (lnL.insertar(libro) > 0)
+                                {
+                                    Session["_exito"] = "El libro se ha insertado de manera exitosa";
+                                    limpiar();
+                                }
+                                else
+                                    Session["_wrn"] = "No se ha podido guardar el libro!!";
                             }
                             else
-                                Session["_wrn"] = "No se ha podido guardar el libro!!";
+                            {
+
+                            }
                         }
                         else
                             Session["_wrn"] = "Ese título ya existe para el autor seleccionado!!";
                     }
-                else
+                    else
                         Session["_wrn"] = "Atención la clave del Libro ya está en uso. Debe cambiarla!!";
-             }
-                catch (Exception ex)
-                {
+                }
+            }
+            catch (Exception ex)
+            {
 
                 Session["_err"] = "Error al guardar el libro";
-                }
+            }
         }
     }
 }

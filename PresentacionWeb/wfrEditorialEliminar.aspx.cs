@@ -31,9 +31,14 @@ namespace PresentacionWeb
             try
             {
 
-                if(lnE.eliminar($"claveEditorial = '{Session["_claveEditorial"]}'") != -1)
+                if (lnE.eliminar($"claveEditorial = '{Session["_claveEditorial"]}'") != -1)
                 {
                     Session["_exito"] = "Editorial Eliminada con Éxito!!!";
+                    Response.Redirect("wfrListarEditoriales.aspx");
+                }
+                else
+                {
+                    Session["_err"] = "No se pude borrar la Editorial, esta ya no existe!";
                     Response.Redirect("wfrListarEditoriales.aspx");
                 }
             }

@@ -52,7 +52,9 @@ namespace PresentacionWeb
 
         protected void lnkModificar_Command(object sender, CommandEventArgs e)
         {
-            //Session["_wrn"] = e.CommandArgument.ToString();
+            Session["_claveLibro"] = e.CommandArgument;
+            Response.Redirect("wfrLibros.aspx");
+        
         }
 
         protected void grdLibros_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -77,15 +79,14 @@ namespace PresentacionWeb
             Response.Redirect("wfrLibros.aspx");
         }
 
-        protected void lnkEliminar_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         protected void lnkEliminar_Command(object sender, CommandEventArgs e)
         {
             Session["_claveLibro"] = e.CommandArgument.ToString();
             Response.Redirect("wfrLibroEliminar.aspx");
         }
+
+       
     }
 }

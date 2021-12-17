@@ -16,7 +16,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
               
-             <%}%>
+             <%Session["_err"] = null;
+                          }%>
            
 
             
@@ -26,7 +27,17 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
               
-             <%}%>
+             <%Session["_wrn"] = null;
+                          }%>
+
+            <% if (Session["_exito"] != null) { %>
+                <div class="alert alert-success"                 role="alert">
+                <%=Session["_exito"]%>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              
+             <%Session["_exito"] = null;
+                          }%>
 
 
 
@@ -67,7 +78,7 @@
                     <asp:TemplateField>
                         <ItemTemplate>
                             
-                            <asp:LinkButton ID="lnkEliminar" runat="server" CommandArgument='<%# Eval("Clave").ToString() %>' OnClick="lnkEliminar_Click" ForeColor="Red" OnCommand="lnkEliminar_Command">Eliminar<i class="fas fa-trash"></i></asp:LinkButton>
+                            <asp:LinkButton ID="lnkEliminar" runat="server" CommandArgument='<%# Eval("Clave").ToString() %>' ForeColor="Red" OnCommand="lnkEliminar_Command" ToolTip="Eliminar un registro">Eliminar<i class="fas fa-trash"></i></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="Clave" HeaderText="Clave" />
