@@ -99,6 +99,7 @@ namespace PresentacionWeb
                 if (lnE.modificar(edit,Session["_claveEditorial"].ToString()) != -1)
                 {
                     Session["_exito"] = "Editorial modificada exitosamente!!";
+                    Session["_claveEditorial"] = null;
                     Response.Redirect("wfrListarEditoriales.aspx", false);
                 }
             }
